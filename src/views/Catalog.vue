@@ -1,8 +1,6 @@
 <template>
     <Toast />
-    <div>
-        <Button label="Add" severity="success" @click="showSuccess" />
-    </div>
+        <MyModal/>
     <div class="products-list">
             <div
                 class="product"
@@ -38,11 +36,15 @@ export default defineComponent({
 <script setup>
 import ConfirmDialog from 'primevue/confirmdialog';
 import { onMounted } from 'vue';
-import { productsStore } from '@/stores/products';
+import { productsStore } from '../stores/stores';
 import Toast from 'primevue/toast';
 import { useToast } from "primevue/usetoast";
 import Button from 'primevue/button';
 import { useConfirm } from "primevue/useconfirm";
+
+
+import MyModal from '@/components/MyModal.vue';
+
 const confirm = useConfirm();
 const toast = useToast();
 
@@ -62,12 +64,13 @@ const confirmDel = () => {
         }
     });
 };
-const showSuccess = () => {
-    toast.add({ severity: 'success', detail: 'added successfully', life: 3000 });
-};
+// const showSuccess = () => {
+//     toast.add({ severity: 'success', detail: 'added successfully', life: 3000 });
+// };
 const showWarn = () => {
     toast.add({ severity: 'warn', detail: 'updated successfully', life: 3000 });
 };
+
 
 const productStore = productsStore()
 
@@ -75,6 +78,8 @@ onMounted(() => {
     productStore.fetchProductsFromDB()
     console.log("mounted ....")
 })
+
+
 </script>
 
 <style scoped>

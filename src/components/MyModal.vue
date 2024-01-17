@@ -4,7 +4,11 @@
         <Button label="Show" icon="pi pi-external-link" @click="visible = true" />
             <Dialog v-model:visible="visible" modal header="Add Product" :style="{ width: '50rem' }" :breakpoints="{ '1199px': '75vw', '575px': '90vw' }">
                     <form action="addProduct" class="flex forForm">
-                        <TreeSelect v-model="selectedValue" :options="nodes" placeholder="Select category" class="md:w-20rem w-full" />
+                        <TreeSelect v-model="selectedValue" placeholder="Select category" class="md:w-20rem w-full" :options="categoriesStore.categories"
+        :node-key="'id'"
+        :label="'name'"
+        :children="'subCategories'"
+     />
                         <div class="flex forInputs">
                     <span class="p-float-label">
                         <InputText id="value" v-model="namevalue" type="text" :class="{ 'p-invalid': errorMessage }" aria-describedby="text-error" />
@@ -36,7 +40,6 @@ import Button from 'primevue/button';
 import Dialog from 'primevue/dialog';
 import InputText from 'primevue/inputtext';
 import Toast from 'primevue/toast';
-import TreeSelect from 'primevue/treeselect';
 import { useToast } from "primevue/usetoast";
 import { onMounted, ref } from 'vue';
 import { categoriesStore } from '../stores/stores';
@@ -50,23 +53,36 @@ const visible = ref(false);
 const namevalue = ref(null);
 const categoryIdvalue = ref(null);
 const picturevalue = ref(null);
-const nodes = ref(null);
+
 const selectedValue = ref(null);
 const categoryStore = categoriesStore()
 onMounted(async ()  => {
-    const data = await categoryStore.fetchCategoriesAsTree();
-    console.log(categoryStore)
-        this.nodes = data
+    categoryStore.fetchCategoriesAsTree();
     console.log("mounted ....")
+    console.log("mounted ...." , categoryStore.categories)
 });
 </script>
 
-<script>
-import { defineComponent } from 'vue';
-export default defineComponent({
-    name: 'MyModalComponent'
-})
 
+<script>
+import TreeSelect from 'primevue/treeselect';
+
+export default {
+  components: {
+    TreeSelect,
+  },
+  data() {
+    return {
+      selectedValue: null,
+    };
+  },
+  computed: {
+    categoryStore() {
+      // Assuming you have access to your category store, adjust this according to your actual structure
+      return categoriesStore.categories;
+    },
+  },
+};
 </script>
 
 <style>

@@ -1,33 +1,26 @@
+import { defineStore } from 'pinia'
 
-import { defineStore } from 'pinia';
-
-export const productsStore = defineStore("products", {
+export const productsStore = defineStore('products', {
   state: () => ({
-    products:[]
+    products: []
   }),
   actions: {
     fetchProductsFromDB() {
       fetch('https://dummyjson.com/products')
-      .then(res => res.json())
-        .then(json=>
-        this.products = json.products
-      )
+        .then((res) => res.json())
+        .then((json) => (this.products = json.products))
     }
   }
 })
-export const categoriesStore = defineStore("categories", {
+export const categoriesStore = defineStore('categories', {
   state: () => ({
-    categories:[]
+    categories: []
   }),
   actions: {
     fetchCategoriesAsTree() {
       fetch('http://localhost:3000/categoriesTree/')
-      .then(res => res.json())
-        .then(json =>
-        {
-          return json
-        }
-      )
+        .then((res) => res.json())
+        .then((json) => (this.categories = json))
     }
   }
 })

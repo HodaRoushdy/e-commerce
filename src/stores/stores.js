@@ -21,11 +21,12 @@ export const categoriesStore = defineStore("categories", {
   }),
   actions: {
     fetchCategoriesAsTree() {
-      console.log("fetching")
-      fetch('http://localhost:3000/categoriesTree/1')
+      fetch('http://localhost:3000/categoriesTree/')
       .then(res => res.json())
-        .then(json=>
-        this.categories = json.categories
+        .then(json =>
+        {
+          return json
+        }
       )
     }
   }

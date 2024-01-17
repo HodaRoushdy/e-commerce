@@ -3,7 +3,7 @@
 
 ## Description
 - it is a frontend application which provides show of products and categories and enables you to add product and delete one with confirmation message 
-
+## you can access the appliction in : https://e-commerce-vue-kohl.vercel.app/
 ## Project Setup
 
 ```sh

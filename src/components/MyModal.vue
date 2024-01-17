@@ -21,11 +21,10 @@
                         </div>
                 
                         <Button type="submit" @click="showSuccess" label="Add Product"/>
-                        <!-- <div class="test" v-for="category in categoryStore.categories"
+                        <div class="test" v-for="category in categoryStore.categories"
                         :key="category.id">
                             <p>{{ category.name }}</p>
-
-                        </div> -->
+                        </div>
                     </form>
                 </Dialog>
                 
@@ -51,12 +50,13 @@ const visible = ref(false);
 const namevalue = ref(null);
 const categoryIdvalue = ref(null);
 const picturevalue = ref(null);
-
 const nodes = ref(null);
 const selectedValue = ref(null);
 const categoryStore = categoriesStore()
-onMounted(() => {
-    categoryStore.fetchCategoriesAsTree().then((data) => (this.nodes = data))
+onMounted(async ()  => {
+    const data = await categoryStore.fetchCategoriesAsTree();
+    console.log(categoryStore)
+        this.nodes = data
     console.log("mounted ....")
 });
 </script>

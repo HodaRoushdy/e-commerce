@@ -4,7 +4,7 @@
     <div class="products-list">
             <div
                 class="product"
-                v-for="product in productStore.products"
+                v-for="product in products"
                 :key="product.id"
                 >
                 <img :src="product.thumbnail">
@@ -34,20 +34,24 @@ export default defineComponent({
 
 
 <script setup>
+import { productsStore} from './renderProducts.vue';
 import ConfirmDialog from 'primevue/confirmdialog';
-import { onMounted } from 'vue';
-import { productsStore } from '../stores/stores';
+// import { onMounted } from 'vue';
 import Toast from 'primevue/toast';
 import { useToast } from "primevue/usetoast";
 import Button from 'primevue/button';
 import { useConfirm } from "primevue/useconfirm";
-
-
 import MyModal from '@/components/MyModal.vue';
 
+const products = productsStore.productsList
+
+
 const confirm = useConfirm();
+
 const toast = useToast();
 
+
+console.log (products)
 
 const confirmDel = () => {
     confirm.require({
@@ -71,13 +75,13 @@ const showWarn = () => {
     toast.add({ severity: 'warn', detail: 'updated successfully', life: 3000 });
 };
 
-
-const productStore = productsStore()
-
-onMounted(() => {
-    productStore.fetchProductsFromDB()
-    console.log("mounted ....")
-})
+// onMounted(() => {
+//     // productStore.fetchProductsFromDB()
+//     console.log("mounted ....")
+//     fetch('https://dummyjson.com/products')
+//         .then(res => res.json())
+//         .then(console.log("...data retuned"));
+// })
 
 
 </script>
